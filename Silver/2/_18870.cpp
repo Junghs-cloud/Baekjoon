@@ -1,35 +1,30 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 int main()
 {
-	int N, M, X, T;
-	int a, b;
-	cin >> N >> M >> X;
-	int** arr = new int*[N + 1];
-	bool* isVisited = new bool[N + 1];
-	for (int i = 0; i < N + 1; i++)
+	cin.tie(NULL);
+	ios::sync_with_stdio(false);
+
+	int N, x;
+	cin >> N;
+	vector<int> v;
+	vector<int> datas;
+	for (int i = 0; i < N; i++)
 	{
-		arr[i] = new int[N + 1];
-		isVisited[i] = false;
-		for (int j = 0; j < N + 1; j++)
-		{
-			if (i == j)
-			{
-				arr[i][j] = 0;
-			}
-			else
-			{
-				arr[i][j] = 99999999;
-			}
-		}
+		cin >> x;
+		datas.push_back(x);
+		v.push_back(x);
 	}
-	for (int i = 0; i < M; i++)
+	sort(v.begin(), v.end());
+	v.erase(unique(v.begin(), v.end()), v.end());
+	for (int i = 0; i < N; i++)
 	{
-		cin >> a >> b >> T;
-		arr[a][b] = T;
+		int index = lower_bound(v.begin(), v.end(), datas.at(i)) - v.begin();
+		cout << index << " ";
 	}
-	
 
 	return 0;
 }
