@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+long long** dp;
+
+void fillDpArr()
+{
+	dp = new long long* [100001];
+	for (int i = 0; i < 100001; i++)
+	{
+		dp[i] = new long long[4];
+		for (int j = 0; j < 4; j++)
+		{
+			dp[i][j] = 0;
+		}
+	}
+	dp[1][1] = 1;
+	dp[2][2] = 1;
+	dp[3][1] = 1;
+	dp[3][2] = 1;
+	dp[3][3] = 1;
+	for (int i = 4; i < 100001; i++)
+	{
+		dp[i][1] = dp[i - 1][2] % 1000000009 + dp[i - 1][3] % 1000000009;
+		dp[i][1] %= 1000000009;
+		dp[i][2] = dp[i - 2][1] % 1000000009 + dp[i - 2][3] % 1000000009;
+		dp[i][2] %= 1000000009;
+		dp[i][3] = dp[i - 3][1] % 1000000009 + dp[i - 3][2] % 1000000009;
+		dp[i][3] %= 1000000009;
+	}
+}
+
+int main()
+{
+	fillDpArr();
+	int T, num;
+	cin >> T;
+	for (int i = 0; i < T; i++)
+	{
+		cin >> num;
+		long long sum = dp[num][1]+ dp[num][2]+ dp[num][3];
+		sum %= 1000000009;
+		cout << sum << "\n";
+	}
+	return 0;
+}
